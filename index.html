@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personnalisation de Bijoux - IGLUXE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section h2 {
+            font-size: 1.8em;
+            color: #333;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .form-group input[type="number"],
+        .form-group input[type="text"],
+        .form-group input[type="color"],
+        .form-group select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input[type="number"]:focus,
+        .form-group input[type="text"]:focus,
+        .form-group input[type="color"]:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .weight-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .weight-button {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .weight-button:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .weight-button.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .color-picker-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .color-picker-container input[type="color"] {
+            width: 100%;
+            height: 60px;
+            cursor: pointer;
+        }
+
+        .preview {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .canvas-container {
+            width: 100%;
+            max-width: 350px;
+            aspect-ratio: 1;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #braceletCanvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        .info-box {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            color: #333;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .drawing-tools {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .tool-btn:hover {
+            border-color: #667eea;
+        }
+
+        .tool-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .size-slider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .size-slider input {
+            flex: 1;
+        }
+
+        .size-slider span {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .character-count {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ IGLUXE - Personnalisation de Bijoux ✨</h1>
+            <p>Créez votre bracelet unique et personnalisé</p>
+        </div>
+
+        <div class="content">
+            <!-- Formulaire de configuration -->
+            <div class="section">
+                <h2>📋 Configuration</h2>
+
+                <!-- Poids -->
+                <div class="form-group">
+                    <label>Poids du Pendentif (grammes)</label>
+                    <div class="weight-container">
+                        <button class="weight-button" data-weight="5">5g</button>
+                        <button class="weight-button" data-weight="10">10g</button>
+                        <button class="weight-button" data-weight="15">15g</button>
+                        <button class="weight-button" data-weight="20">20g</button>
+                    </div>
+                    <input type="number" id="customWeight" placeholder="ou saisissez un poids personnalisé" min="1" max="100">
+                </div>
+
+                <!-- Lettres/Gravure -->
+                <div class="form-group">
+                    <label>Lettres pour la Gravure</label>
+                    <input type="text" id="letters" placeholder="Entrez vos initiales ou texte" maxlength="10">
+                    <div class="character-count"><span id="charCount">0</span>/10 caractères</div>
+                </div>
+
+                <!-- Couleur du bracelet -->
+                <div class="form-group">
+                    <label>Couleur du Bracelet</label>
+                    <div class="color-picker-container">
+                        <input type="color" id="braceletColor" value="#667eea">
+                        <select id="colorPreset">
+                            <option value="">-- Couleurs Prédéfinies --</option>
+                            <option value="#667eea">Bleu Indigo</option>
+                            <option value="#764ba2">Violet</option>
+                            <option value="#f093fb">Rose Pétale</option>
+                            <option value="#4facfe">Bleu Ciel</option>
+                            <option value="#43e97b">Vert Menthe</option>
+                            <option value="#fa709a">Rose Corail</option>
+                            <option value="#feca57">Or Doré</option>
+                            <option value="#c44569">Rouge Grenade</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Matériau -->
+                <div class="form-group">
+                    <label>Matériau</label>
+                    <select id="material">
+                        <option value="argent">Argent Sterling</option>
+                        <option value="or">Or 18 Carats</option>
+                        <option value="cuivre">Cuivre</option>
+                        <option value="titane">Titane</option>
+                        <option value="silicone">Silicone Flex</option>
+                    </select>
+                </div>
+
+                <!-- Style -->
+                <div class="form-group">
+                    <label>Style du Bracelet</label>
+                    <select id="style">
+                        <option value="chaîne">Chaîne Classique</option>
+                        <option value="perles">Perles</option>
+                        <option value="tressé">Tressé</option>
+                        <option value="cuir">Cuir</option>
+                        <option value="moderne">Moderne Géométrique</option>
+                    </select>
+                </div>
+
+                <!-- Info -->
+                <div class="info-box">
+                    <p><strong>Poids sélectionné:</strong> <span id="selectedWeight">Non défini</span></p>
+                    <p><strong>Lettres:</strong> <span id="selectedLetters">Aucune</span></p>
+                    <p><strong>Matériau:</strong> <span id="selectedMaterial">Argent Sterling</span></p>
+                </div>
+            </div>
+
+            <!-- Aperçu et dessin -->
+            <div class="section">
+                <h2>🎨 Aperçu & Dessin</h2>
+
+                <div class="preview">
+                    <div class="canvas-container">
+                        <canvas id="braceletCanvas"></canvas>
+                    </div>
+
+                    <div style="width: 100%;">
+                        <p style="text-align: center; font-weight: 600; margin-bottom: 10px;">Outils de Dessin</p>
+                        <div class="drawing-tools">
+                            <button class="tool-btn active" data-tool="pen">✏️ Crayon</button>
+                            <button class="tool-btn" data-tool="eraser">🧹 Gomme</button>
+                            <button class="tool-btn" data-tool="line">📏 Ligne</button>
+                            <button class="tool-btn" data-tool="circle">⭕ Cercle</button>
+                            <button class="tool-btn" data-tool="rectangle">▭ Rectangle</button>
+                            <button class="tool-btn" data-tool="clear">🗑️ Effacer Tout</button>
+                        </div>
+                    </div>
+
+                    <div style="width: 100%;">
+                        <div class="size-slider">
+                            <label>Taille du Trait:</label>
+                            <input type="range" id="brushSize" min="1" max="20" value="3">
+                            <span id="sizeValue">3</span>px
+                        </div>
+                    </div>
+
+                    <div style="width: 100%; margin-top: 10px;">
+                        <label for="drawColor">Couleur du Dessin:</label>
+                        <input type="color" id="drawColor" value="#000000" style="width: 100%; height: 40px; cursor: pointer;">
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button class="btn btn-primary" onclick="exportCommande()">📥 Exporter Commande</button>
+                    <button class="btn btn-secondary" onclick="reinitialiserForm()">🔄 Réinitialiser</button>
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    ✅ Commande exportée avec succès!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === VARIABLES GLOBALES ===
+        let currentTool = 'pen';
+        let isDrawing = false;
+        let startX, startY;
+        const canvas = document.getElementById('braceletCanvas');
+        const ctx = canvas.getContext('2d');
+        let selectedWeight = null;
+        let canvasData = null;
+
+        // === INITIALISATION CANVAS ===
+        function initCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            redrawCanvas();
+        }
+
+        function redrawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Fond avec dégradé
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#f9f9f9');
+            gradient.addColorStop(1, '#efefef');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Dessiner le bracelet
+            drawBracelet();
+
+            // Restaurer le contenu dessiné
+            if (canvasData) {
+                const imageData = ctx.createImageData(canvas.width, canvas.height);
+                imageData.data.set(canvasData);
+                ctx.putImageData(imageData, 0, 0);
+            }
+        }
+
+        function drawBracelet() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(canvas.width, canvas.height) / 2 - 30;
+
+            // Cercle du bracelet
+            ctx.strokeStyle = document.getElementById('braceletColor').value;
+            ctx.lineWidth = 15;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Pendentif central
+            ctx.fillStyle = document.getElementById('braceletColor').value;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY + radius - 20, 25, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Texte du pendentif
+            const letters = document.getElementById('letters').value || 'JE';
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(letters, centerX, centerY + radius - 20);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        window.addEventListener('load', initCanvas);
+
+        // === GESTION DES POIDS ===
+        document.querySelectorAll('.weight-button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.weight-button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedWeight = this.dataset.weight;
+                updateInfo();
+            });
+        });
+
+        document.getElementById('customWeight').addEventListener('input', function(e) {
+            if (e.target.value) {
+                document.querySelectorAll('.weight-button').forEach(b => b.classList.remove('active'));
+                selectedWeight = e.target.value;
+                updateInfo();
+            }
+        });
+
+        // === GESTION DES LETTRES ===
+        document.getElementById('letters').addEventListener('input', function() {
+            document.getElementById('charCount').textContent = this.value.length;
+            updateInfo();
+            redrawCanvas();
+        });
+
+        // === GESTION DES COULEURS ===
+        document.getElementById('braceletColor').addEventListener('input', function() {
+            redrawCanvas();
+        });
+
+        document.getElementById('colorPreset').addEventListener('change', function() {
+            if (this.value) {
+                document.getElementById('braceletColor').value = this.value;
+                redrawCanvas();
+            }
+        });
+
+        // === GESTION DU MATÉRIAU ===
+        document.getElementById('material').addEventListener('change', function() {
+            updateInfo();
+        });
+
+        // === MISE À JOUR DE L'INFO ===
+        function updateInfo() {
+            document.getElementById('selectedWeight').textContent = selectedWeight ? `${selectedWeight}g` : 'Non défini';
+            document.getElementById('selectedLetters').textContent = document.getElementById('letters').value || 'Aucune';
+            document.getElementById('selectedMaterial').textContent = document.getElementById('material').options[document.getElementById('material').selectedIndex].text;
+        }
+
+        // === OUTILS DE DESSIN ===
+        document.querySelectorAll('.tool-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentTool = this.dataset.tool;
+
+                if (currentTool === 'clear') {
+                    canvasData = null;
+                    redrawCanvas();
+                    currentTool = 'pen';
+                    document.querySelector('[data-tool="pen"]').classList.add('active');
+                }
+            });
+        });
+
+        // === TAILLE DU TRAIT ===
+        document.getElementById('brushSize').addEventListener('input', function() {
+            document.getElementById('sizeValue').textContent = this.value;
+        });
+
+        // === DESSIN SUR CANVAS ===
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        function startDrawing(e) {
+            const rect = canvas.getBoundingClientRect();
+            startX = e.clientX - rect.left;
+            startY = e.clientY - rect.top;
+            isDrawing = true;
+
+            // Sauvegarder l'état du canvas
+            if (!canvasData) {
+                canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height).data.slice();
+            }
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+
+            ctx.strokeStyle = document.getElementById('drawColor').value;
+            ctx.lineWidth = document.getElementById('brushSize').value;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            if (currentTool === 'pen') {
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(currentX, currentY);
+                ctx.stroke();
+                startX = currentX;
+                startY = currentY;
+            } else if (currentTool === 'eraser') {
+                ctx.clearRect(currentX - 10, currentY - 10, 20, 20);
+            }
+        }
+
+        function stopDrawing() {
+            if (isDrawing) {
+                isDrawing = false;
+                // Sauvegarder les données du dessin
+                canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height).data.slice();
+            }
+        }
+
+        // === EXPORT COMMANDE ===
+        function exportCommande() {
+            if (!selectedWeight) {
+                alert('⚠️ Veuillez sélectionner un poids!');
+                return;
+            }
+
+            const weight = selectedWeight;
+            const letters = document.getElementById('letters').value || 'Aucune';
+            const color = document.getElementById('braceletColor').value;
+            const material = document.getElementById('material').value;
+            const style = document.getElementById('style').value;
+
+            const commande = `
+╔════════════════════════════════════════╗
+║     📋 RÉSUMÉ DE LA COMMANDE 📋      ║
+╚════════════════════════════════════════╝
+
+📊 SPÉCIFICATIONS:
+   • Poids du Pendentif: ${weight}g
+   • Lettres/Gravure: ${letters}
+   • Couleur: ${color}
+   • Matériau: ${material}
+   • Style: ${style}
+
+🎨 APERÇU:
+   • Bracelet personnalisé créé avec les paramètres ci-dessus
+   • Dessin personnalisé: ✅ Inclus
+
+📅 DATE: ${new Date().toLocaleDateString('fr-FR')}
+⏰ HEURE: ${new Date().toLocaleTimeString('fr-FR')}
+
+════════════════════════════════════════
+        Merci de votre commande! 🙏
+════════════════════════════════════════
+            `;
+
+            // Copier dans le presse-papiers
+            navigator.clipboard.writeText(commande).then(() => {
+                // Télécharger le canvas
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `bracelet_${new Date().getTime()}.png`;
+                    link.click();
+                    URL.revokeObjectURL(url);
+                });
+
+                // Afficher le message de succès
+                const msg = document.getElementById('successMessage');
+                msg.classList.add('show');
+                setTimeout(() => msg.classList.remove('show'), 3000);
+
+                // Afficher la commande en alert
+                alert(commande);
+            }).catch(() => {
+                alert('❌ Erreur lors de l\'export');
+            });
+        }
+
+        // === RÉINITIALISER ===
+        function reinitialiserForm() {
+            document.querySelectorAll('.weight-button').forEach(b => b.classList.remove('active'));
+            document.getElementById('customWeight').value = '';
+            document.getElementById('letters').value = '';
+            document.getElementById('charCount').textContent = '0';
+            document.getElementById('braceletColor').value = '#667eea';
+            document.getElementById('material').value = 'argent';
+            document.getElementById('style').value = 'chaîne';
+            selectedWeight = null;
+            canvasData = null;
+            redrawCanvas();
+            updateInfo();
+        }
+
+        // Initialisation
+        updateInfo();
+    </script>
+</body>
+</html>
