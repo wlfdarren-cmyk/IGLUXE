@@ -1,0 +1,13 @@
+{
+  "name": "igluxe-server",
+  "version": "1.0.0",
+  "description": "Minimal server to store orders for IGLUXE during PayPal testing",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
