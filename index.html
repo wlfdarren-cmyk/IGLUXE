@@ -109,6 +109,112 @@
             min-height: 180px;
         }
 
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 14px;
+            display: block;
+            margin-bottom: 14px;
+            background: #f2f2f2;
+        }
+
+        .price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 10px;
+        }
+
+        /* Galerie produit */
+        .gallery {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            align-items: center;
+        }
+
+        .thumb-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+        }
+
+        .thumb {
+            width: 54px;
+            height: 54px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .thumb:hover {
+            border-color: #9b5de5;
+        }
+
+        .thumb-label {
+            font-size: 0.72rem;
+            max-width: 90px;
+            color: #4e4a52;
+            line-height: 1.2;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.85);
+            z-index: 1200;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .lightbox img {
+            max-width: 92%;
+            max-height: 78%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        .lightbox .close, .lightbox .prev, .lightbox .next, .lightbox .play {
+            position: absolute;
+            color: #fff;
+            background: rgba(0,0,0,0.45);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.25rem;
+            user-select: none;
+        }
+
+        .lightbox .close { top: 18px; right: 18px; }
+        .lightbox .prev { left: 18px; }
+        .lightbox .next { right: 18px; }
+        .lightbox .play { top: 18px; left: 18px; }
+
+        .lightbox .caption {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            background: rgba(0,0,0,0.45);
+            padding: 8px 14px;
+            border-radius: 10px;
+            max-width: 92%;
+            text-align: center;
+            font-weight: 600;
+        }
+
         .card h3 {
             margin-top: 0;
             margin-bottom: 14px;
@@ -236,6 +342,71 @@
             margin: 0 0 16px;
         }
 
+        .sketch-section {
+            display: grid;
+            gap: 22px;
+            grid-template-columns: 1fr 1fr;
+            align-items: start;
+        }
+
+        .sketch-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 22px 60px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(34, 31, 39, 0.08);
+        }
+
+        .sketch-card h3 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+            color: #111;
+        }
+
+        .sketch-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .sketch-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(34, 31, 39, 0.12);
+            background: #f7f6f4;
+            color: #111;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .sketch-button:hover,
+        .sketch-button.active {
+            background: #9b5de5;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .sketch-canvas {
+            width: 100%;
+            min-height: 360px;
+            border-radius: 22px;
+            background: #f6f3ef;
+            border: 2px solid rgba(34, 31, 39, 0.1);
+            box-shadow: inset 0 0 0 1px rgba(34, 31, 39, 0.03);
+            cursor: crosshair;
+        }
+
+        .sketch-notes {
+            font-size: 0.95rem;
+            color: #3d3942;
+            line-height: 1.7;
+        }
+
         footer {
             text-align: center;
             margin: 44px 0 16px;
@@ -267,16 +438,75 @@
             <h2>Nos bijoux Cubana</h2>
             <div class="grid">
                 <div class="card">
+                    <img class="product-image" src="images/cuban_chain.jpg" alt="Collier Cubana" />
+                    <div class="price">5 800 €</div>
                     <h3>Collier Cubana Luxe</h3>
                     <p>Chaîne épaisse, finition brillante et poids premium pour une présence remarquable. Parfait pour un style urbain et chic.</p>
+                    <div class="gallery">
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/cuban_chain.jpg" alt="vignette collier 1" onclick="openLightbox(['images/cuban_chain.jpg','images/collier2.jpg','images/studio_white.jpg'],['Collier Cubana — vue 1','Collier Cubana — vue 2','Studio produit'],0)">
+                            <div class="thumb-label">Collier vue 1</div>
+                        </div>
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/collier2.jpg" alt="vignette collier 2" onclick="openLightbox(['images/cuban_chain.jpg','images/collier2.jpg','images/studio_white.jpg'],['Collier Cubana — vue 1','Collier Cubana — vue 2','Studio produit'],1)">
+                            <div class="thumb-label">Collier vue 2</div>
+                        </div>
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/studio_white.jpg" alt="vignette collier 3" onclick="openLightbox(['images/cuban_chain.jpg','images/collier2.jpg','images/studio_white.jpg'],['Collier Cubana — vue 1','Collier Cubana — vue 2','Studio produit'],2)">
+                            <div class="thumb-label">Studio produit</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
+                    <img class="product-image" src="images/bracelet2.jpg" alt="Bracelet Cubana" />
+                    <div class="price">4 900 €</div>
                     <h3>Bracelet Cubana Précieux</h3>
                     <p>Un bijou de valeur pensé pour compléter le collier et renforcer votre allure avec une signature unique.</p>
+                    <div class="gallery">
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/bracelet2.jpg" alt="vignette bracelet 1" onclick="openLightbox(['images/bracelet2.jpg','images/bracelet.jpg','images/studio_white.jpg'],['Bracelet Cubana — vue 1','Bracelet Cubana — vue 2','Studio produit'],0)">
+                            <div class="thumb-label">Bracelet vue 1</div>
+                        </div>
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/bracelet.jpg" alt="vignette bracelet 2" onclick="openLightbox(['images/bracelet2.jpg','images/bracelet.jpg','images/studio_white.jpg'],['Bracelet Cubana — vue 1','Bracelet Cubana — vue 2','Studio produit'],1)">
+                            <div class="thumb-label">Bracelet vue 2</div>
+                        </div>
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/studio_white.jpg" alt="vignette bracelet 3" onclick="openLightbox(['images/bracelet2.jpg','images/bracelet.jpg','images/studio_white.jpg'],['Bracelet Cubana — vue 1','Bracelet Cubana — vue 2','Studio produit'],2)">
+                            <div class="thumb-label">Studio produit</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
+                    <img class="product-image" src="images/studio_white.jpg" alt="Design sur mesure" />
                     <h3>Design sur mesure</h3>
                     <p>Personnalisation de gravure, choix de matériaux haut de gamme et finitions soignées pour chaque client IGLUXE.</p>
+                    <div class="gallery">
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/studio_white.jpg" alt="vignette design 1" onclick="openLightbox(['images/studio_white.jpg','images/collier2.jpg'],['Design sur mesure — studio','Collier détail'],0)">
+                            <div class="thumb-label">Studio produit</div>
+                        </div>
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/collier2.jpg" alt="vignette design 2" onclick="openLightbox(['images/studio_white.jpg','images/collier2.jpg'],['Design sur mesure — studio','Collier détail'],1)">
+                            <div class="thumb-label">Collier détail</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="product-image" src="images/pendentif.svg" alt="Modèle Pendentif IGLUXE" />
+                    <div class="price">Modèle Pendentif IGLUXE — 1 499 €</div>
+                    <h3>Modèle Pendentif IGLUXE</h3>
+                    <p>Modèle exclusif IGLUXE à partir de 1 499 €. Pendentif de luxe, adapté en or ou argent selon votre choix de finition.</p>
+                    <div class="gallery">
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/pendentif.svg" alt="vignette pendentif 1" onclick="openLightbox(['images/pendentif.svg','images/studio_white.jpg'],['Pendentif IGLUXE — vue 1','Studio produit'],0)">
+                            <div class="thumb-label">Pendentif 1</div>
+                        </div>
+                        <div class="thumb-item">
+                            <img class="thumb" src="images/studio_white.jpg" alt="vignette pendentif 2" onclick="openLightbox(['images/pendentif.svg','images/studio_white.jpg'],['Pendentif IGLUXE — vue 1','Studio produit'],1)">
+                            <div class="thumb-label">Studio produit</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -289,7 +519,7 @@
                     <select id="product">
                         <option value="collier" selected>Collier Cubana Luxe</option>
                         <option value="bracelet">Bracelet Cubana Précieux</option>
-                        <option value="ensemble">Ensemble Collier + Bracelet</option>
+                        <option value="pendant">Modèle Pendentif IGLUXE</option>
                     </select>
 
                     <label for="quantity">Quantité</label>
@@ -322,10 +552,35 @@
                     </div>
                     <div style="margin-top:18px;">
                         <label for="paypalAmount" style="font-weight:700; display:block; margin-bottom:8px;">Montant PayPal</label>
-                        <input id="paypalAmount" type="number" step="0.01" value="10.00" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(34,31,39,0.08); width:160px;">
+                        <input id="paypalAmount" type="number" step="0.01" value="5800.00" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(34,31,39,0.08); width:160px;">
                         <div id="paypal-button-container" style="margin-top:14px;"></div>
                         <p style="font-size:0.90rem; color:#4e4a52; margin-top:8px;">Mode: sandbox (démo). Remplacez le `client-id` PayPal par votre identifiant Live pour la production.</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section sketch" id="sketch">
+            <h2>Création de votre bijou</h2>
+            <div class="sketch-section">
+                <div class="sketch-card">
+                    <h3>Faites un croquis</h3>
+                    <p class="sketch-notes">Dessinez votre collier ou pendentif directement ici. Utilisez l’outil crayon pour tracer vos formes, le gomme pour corriger, et cliquez sur Effacer pour recommencer.</p>
+                    <div class="sketch-toolbar">
+                        <button class="sketch-button active" id="toolDraw">Crayon</button>
+                        <button class="sketch-button" id="toolErase">Gomme</button>
+                        <button class="sketch-button" id="clearSketch">Effacer</button>
+                        <button class="sketch-button" id="saveSketch">Sauvegarder</button>
+                    </div>
+                    <canvas id="sketchCanvas" class="sketch-canvas"></canvas>
+                </div>
+                <div class="sketch-card">
+                    <h3>Instructions</h3>
+                    <p class="sketch-notes">1. Sélectionnez le crayon pour dessiner la forme générale de votre bijou.</p>
+                    <p class="sketch-notes">2. Changez pour la gomme si vous souhaitez corriger un trait.</p>
+                    <p class="sketch-notes">3. Cliquez sur Sauvegarder pour télécharger votre croquis en image.</p>
+                    <p class="sketch-notes"><strong>Astuce</strong> : dessinez d’abord le contour, puis ajoutez les détails du pendentif et de la chaîne.</p>
+                    <p class="sketch-notes">Si vous souhaitez une proposition sur mesure, envoyez-nous ce dessin par email à <strong>contact@pasdor.fr</strong>.</p>
                 </div>
             </div>
         </section>
@@ -338,6 +593,14 @@
         </section>
 
         <footer>© 2026 IGLUXE | pasdor.fr</footer>
+    </div>
+    <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+        <div class="play" id="lightboxPlay" onclick="toggleAutoplay(event)">▶</div>
+        <div class="close" onclick="closeLightbox(event)">×</div>
+        <div class="prev" onclick="prevImage(event)">‹</div>
+        <img id="lightboxImg" src="" alt="Agrandissement">
+        <div class="next" onclick="nextImage(event)">›</div>
+        <div class="caption" id="lightboxCaption"></div>
     </div>
     <script src="https://www.paypal.com/sdk/js?client-id=Y4Q44WMVSYDLA&currency=EUR"></script>
     <script>
@@ -361,8 +624,9 @@
                 return;
             }
 
-            const productName = product === 'bracelet' ? 'Bracelet Cubana Précieux' : product === 'ensemble' ? 'Ensemble Collier + Bracelet' : 'Collier Cubana Luxe';
-            const total = quantity * (product === 'ensemble' ? 189 : product === 'bracelet' ? 79 : 109);
+            const productName = product === 'bracelet' ? 'Bracelet Cubana Précieux' : product === 'pendant' ? 'Pendentif IGLUXE' : product === 'ensemble' ? 'Ensemble Collier + Bracelet' : 'Collier Cubana Luxe';
+            const prices = { collier: 5800, bracelet: 4900, pendant: 1499, ensemble: 5800 + 4900 };
+            const total = quantity * (prices[product] || prices.collier);
             const formattedTotal = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(total);
 
             statusElem.textContent = '✅ Commande validée. Sélectionnez votre moyen de paiement ci-dessous pour finaliser l’achat.';
@@ -444,6 +708,156 @@
                 }
             }).render('#paypal-button-container');
         }
+    </script>
+    <script>
+        function openLightbox(images, captions, index) {
+            window._lbImages = images || [];
+            window._lbCaptions = captions || [];
+            window._lbIndex = (typeof index === 'number') ? index : 0;
+            var img = document.getElementById('lightboxImg');
+            var cap = document.getElementById('lightboxCaption');
+            if (!img) return;
+            img.src = window._lbImages[window._lbIndex] || '';
+            cap.textContent = window._lbCaptions[window._lbIndex] || '';
+            document.getElementById('lightbox').style.display = 'flex';
+            window._lbAutoplay = false;
+            updatePlayButton();
+            clearInterval(window._lbTimer);
+        }
+
+        function closeLightbox(e) {
+            if (e && e.target && e.target.id !== 'lightbox' && !e.target.classList.contains('close')) return;
+            document.getElementById('lightbox').style.display = 'none';
+            var img = document.getElementById('lightboxImg'); if (img) img.src = '';
+            clearInterval(window._lbTimer);
+        }
+
+        function showCurrent() {
+            if (!window._lbImages) return;
+            var img = document.getElementById('lightboxImg');
+            var cap = document.getElementById('lightboxCaption');
+            img.src = window._lbImages[window._lbIndex] || '';
+            cap.textContent = window._lbCaptions[window._lbIndex] || '';
+        }
+
+        function prevImage(e) {
+            if (!window._lbImages) return;
+            window._lbIndex = (window._lbIndex - 1 + window._lbImages.length) % window._lbImages.length;
+            showCurrent();
+        }
+
+        function nextImage(e) {
+            if (!window._lbImages) return;
+            window._lbIndex = (window._lbIndex + 1) % window._lbImages.length;
+            showCurrent();
+        }
+
+        function toggleAutoplay(e) {
+            e && e.stopPropagation();
+            window._lbAutoplay = !window._lbAutoplay;
+            updatePlayButton();
+            if (window._lbAutoplay) {
+                window._lbTimer = setInterval(function(){ nextImage(); }, 3000);
+            } else {
+                clearInterval(window._lbTimer);
+            }
+        }
+
+        function updatePlayButton() {
+            var btn = document.getElementById('lightboxPlay');
+            if (!btn) return;
+            btn.textContent = window._lbAutoplay ? '❚❚' : '▶';
+        }
+
+        document.addEventListener('keydown', function(ev) {
+            if (document.getElementById('lightbox').style.display !== 'flex') return;
+            if (ev.key === 'Escape') closeLightbox();
+            if (ev.key === 'ArrowLeft') prevImage();
+            if (ev.key === 'ArrowRight') nextImage();
+            if (ev.key === ' ') { ev.preventDefault(); toggleAutoplay(); }
+        });
+
+        // Sketch tool
+        (function() {
+            var canvas = document.getElementById('sketchCanvas');
+            var ctx = canvas.getContext('2d');
+            var drawing = false;
+            var currentTool = 'draw';
+            var lineWidth = 4;
+            var strokeColor = '#111';
+
+            function resizeCanvas() {
+                var rect = canvas.getBoundingClientRect();
+                var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                canvas.width = rect.width * window.devicePixelRatio;
+                canvas.height = rect.height * window.devicePixelRatio;
+                canvas.style.width = rect.width + 'px';
+                canvas.style.height = rect.height + 'px';
+                ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                if (imageData.width) {
+                    ctx.putImageData(imageData, 0, 0);
+                }
+            }
+
+            function setTool(tool) {
+                currentTool = tool;
+                document.getElementById('toolDraw').classList.toggle('active', tool === 'draw');
+                document.getElementById('toolErase').classList.toggle('active', tool === 'erase');
++                if (tool === 'erase') {
++                    lineWidth = 16;
++                } else {
++                    lineWidth = 4;
++                }
+            }
+
+            function getMousePos(e) {
+                var rect = canvas.getBoundingClientRect();
+                return {
+                    x: (e.clientX - rect.left),
+                    y: (e.clientY - rect.top)
+                };
+            }
+
+            canvas.addEventListener('mousedown', function(e) {
+                drawing = true;
+                var pos = getMousePos(e);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+            });
+
+            canvas.addEventListener('mousemove', function(e) {
+                if (!drawing) return;
+                var pos = getMousePos(e);
+                ctx.lineWidth = lineWidth;
+                ctx.strokeStyle = currentTool === 'erase' ? '#f6f3ef' : strokeColor;
+                ctx.globalCompositeOperation = currentTool === 'erase' ? 'destination-out' : 'source-over';
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (!drawing) return;
+                drawing = false;
+                ctx.closePath();
+            });
+
+            document.getElementById('toolDraw').addEventListener('click', function() { setTool('draw'); });
+            document.getElementById('toolErase').addEventListener('click', function() { setTool('erase'); });
+            document.getElementById('clearSketch').addEventListener('click', function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+            document.getElementById('saveSketch').addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'croquis-collier.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+        })();
     </script>
 </body>
 </html>
